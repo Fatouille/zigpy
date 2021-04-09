@@ -111,16 +111,16 @@ class NodeDescriptor(t.Struct):
 
     @classmethod
     def _old_constructor(
-        cls: "NodeDescriptor",
-        byte1: t.uint8_t = None,
-        byte2: t.uint8_t = None,
-        mac_capability_flags: MACCapabilityFlags = None,
-        manufacturer_code: t.uint16_t = None,
-        maximum_buffer_size: t.uint8_t = None,
-        maximum_incoming_transfer_size: t.uint16_t = None,
-        server_mask: t.uint16_t = None,
-        maximum_outgoing_transfer_size: t.uint16_t = None,
-        descriptor_capability_field: t.uint8_t = None,
+            cls: "NodeDescriptor",
+            byte1: t.uint8_t = None,
+            byte2: t.uint8_t = None,
+            mac_capability_flags: MACCapabilityFlags = None,
+            manufacturer_code: t.uint16_t = None,
+            maximum_buffer_size: t.uint8_t = None,
+            maximum_incoming_transfer_size: t.uint16_t = None,
+            server_mask: t.uint16_t = None,
+            maximum_outgoing_transfer_size: t.uint16_t = None,
+            descriptor_capability_field: t.uint8_t = None,
     ) -> NodeDescriptor:
         logical_type = None
         complex_descriptor_available = None
@@ -337,6 +337,19 @@ class Routes(t.Struct):
     RoutingTableList: t.LVList[Route]
 
 
+class Bind(t.Struct):
+    """Bind Descriptor"""
+
+    BindStatus: t.uint8_t
+    pass
+
+
+class Binds(t.Struct):
+    Entries: t.uint8_t
+    StartIndex: t.uint8_t
+    BindTablesList: t.LVList[Bind]
+
+
 class NwkUpdate(t.Struct):
     CHANNEL_CHANGE_REQ = 0xFE
     CHANNEL_MASK_MANAGER_ADDR_CHANGE_REQ = 0xFF
@@ -346,7 +359,7 @@ class NwkUpdate(t.Struct):
     ScanCount: t.uint8_t = t.StructField(requires=lambda s: s.ScanDuration <= 0x05)
     nwkUpdateId: t.uint8_t = t.StructField(
         requires=lambda s: s.ScanDuration
-        in (s.CHANNEL_CHANGE_REQ, s.CHANNEL_MASK_MANAGER_ADDR_CHANGE_REQ)
+                           in (s.CHANNEL_CHANGE_REQ, s.CHANNEL_MASK_MANAGER_ADDR_CHANGE_REQ)
     )
     nwkManagerAddr: t.NWK = t.StructField(
         requires=lambda s: s.ScanDuration == s.CHANNEL_MASK_MANAGER_ADDR_CHANGE_REQ
@@ -440,6 +453,7 @@ class ZDOCmd(t.enum_factory(_CommandID)):
     # ... TODO optional stuff ...
     Mgmt_Lqi_req = 0x0031
     Mgmt_Rtg_req = 0x0032
+    Mgmt_Bind_req = 0x0033
     # ... TODO optional stuff ...
     Mgmt_Leave_req = 0x0034
     Mgmt_Permit_Joining_req = 0x0036
@@ -478,6 +492,7 @@ class ZDOCmd(t.enum_factory(_CommandID)):
     # Network Management Server Services Responses
     Mgmt_Lqi_rsp = 0x8031
     Mgmt_Rtg_rsp = 0x8032
+    Mgmt_Bind_rsp = 0x8033
     # ... TODO optional stuff ...
     Mgmt_Leave_rsp = 0x8034
     Mgmt_Permit_Joining_rsp = 0x8036
@@ -557,6 +572,7 @@ CLUSTERS = {
     # ... TODO optional stuff ...
     ZDOCmd.Mgmt_Lqi_req: (("StartIndex", t.uint8_t),),
     ZDOCmd.Mgmt_Rtg_req: (("StartIndex", t.uint8_t),),
+    ZDOCmd.Mgmt_Bind_req: (("StartIndex", t.uint8_t),),
     # ... TODO optional stuff ...
     ZDOCmd.Mgmt_Leave_req: (("DeviceAddress", t.EUI64), ("Options", t.bitmap8)),
     ZDOCmd.Mgmt_Permit_Joining_req: (
@@ -647,6 +663,7 @@ CLUSTERS = {
     # Network Management Server Services Responses
     ZDOCmd.Mgmt_Lqi_rsp: (STATUS, ("Neighbors", t.Optional(Neighbors))),
     ZDOCmd.Mgmt_Rtg_rsp: (STATUS, ("Routes", t.Optional(Routes))),
+    ZDOCmd.Mgmt_Bind_rsp: (STATUS, ("Bind", t.Optional(Bind))),
     # ... TODO optional stuff ...
     ZDOCmd.Mgmt_Leave_rsp: (STATUS,),
     ZDOCmd.Mgmt_Permit_Joining_rsp: (STATUS,),
@@ -659,7 +676,6 @@ CLUSTERS = {
     )
     # ... TODO optional stuff ...
 }
-
 
 # Rewrite to (name, param_names, param_types)
 for command_id, schema in CLUSTERS.items():
@@ -702,7 +718,7 @@ class ZDOHeader:
 
     @classmethod
     def deserialize(
-        cls, command_id: t.uint16_t, data: bytes
+            cls, command_id: t.uint16_t, data: bytes
     ) -> typing.Tuple["ZDOHeader", bytes]:
         """Deserialize data."""
         tsn, data = t.uint8_t.deserialize(data)
