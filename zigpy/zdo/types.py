@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import typing
+from zigpy.typing import DeviceType
 
 import zigpy.types as t
 
@@ -337,17 +338,11 @@ class Routes(t.Struct):
     RoutingTableList: t.LVList[Route]
 
 
-class Bind(t.Struct):
-    """Bind Descriptor"""
-
-    BindStatus: t.uint8_t
-    pass
-
-
-class Binds(t.Struct):
-    Entries: t.uint8_t
-    StartIndex: t.uint8_t
-    BindTablesList: t.LVList[Bind]
+class Binding(t.Struct):
+    SrcAddress: t.EUI64
+    SrcEndPoint: t.uint8_t
+    ClusterId: t.uint8_t
+    DstAddress: MultiAddress
 
 
 class NwkUpdate(t.Struct):
@@ -663,7 +658,13 @@ CLUSTERS = {
     # Network Management Server Services Responses
     ZDOCmd.Mgmt_Lqi_rsp: (STATUS, ("Neighbors", t.Optional(Neighbors))),
     ZDOCmd.Mgmt_Rtg_rsp: (STATUS, ("Routes", t.Optional(Routes))),
-    ZDOCmd.Mgmt_Bind_rsp: (STATUS, ("Bind", t.Optional(Bind))),
+    ZDOCmd.Mgmt_Bind_rsp: (STATUS,
+        ("BindingTableEntries", t.uint8_t),
+        ("StartIndex", t.uint8_t),
+        ("BindingTableListCount", t.uint8_t),
+        ("BindingTableList", t.LVList[Binding]),
+    ),
+
     # ... TODO optional stuff ...
     ZDOCmd.Mgmt_Leave_rsp: (STATUS,),
     ZDOCmd.Mgmt_Permit_Joining_rsp: (STATUS,),

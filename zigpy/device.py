@@ -61,7 +61,7 @@ class Device(zigpy.util.LocalLogMixin, zigpy.util.ListenableMixin):
         self._listeners = {}
         self._manufacturer = None
         self._model = None
-        self.node_desc = zdo.types.NodeDescriptor()
+        self.node_desc = zdo.types.nodedescriptor()
         self.neighbors = zigpy.neighbor.Neighbors(self)
         self._node_handle = None
         self._pending = zigpy.util.Requests()

@@ -95,6 +95,7 @@ class Neighbors(zigpy.util.ListenableMixin, zigpy.util.LocalLogMixin):
         except (asyncio.TimeoutError, zigpy.exceptions.ZigbeeException):
             return None
 
+
     async def _scan(self) -> NeighborListType:
         """Scan device."""
 

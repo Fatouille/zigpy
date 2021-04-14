@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="390cde44-72c6-4c86-8448-6402cdb9576f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/zigpy.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zdo/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/zdo/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zdo/types.py" beforeDir="false" afterPath="$PROJECT_DIR$/zdo/types.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,5 +71,27 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1617978386739">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1617978386739" />
+    <state width="1899" height="282" key="GridCell.Tab.0.center" timestamp="1617978386739">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1617978386739" />
+    <state width="1899" height="282" key="GridCell.Tab.0.left" timestamp="1617978386739">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1617978386739" />
+    <state width="1899" height="282" key="GridCell.Tab.0.right" timestamp="1617978386739">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1617978386739" />
+    <state x="676" y="333" width="585" height="530" key="find.popup" timestamp="1617975805990">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="676" y="333" width="585" height="530" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617975805990" />
   </component>
 </project>

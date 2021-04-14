@@ -39,7 +39,7 @@ class ZDO(zigpy.util.CatchingTaskMixin, zigpy.util.ListenableMixin):
 
     @zigpy.util.retryable_request
     def request(self, command, *args, use_ieee=False):
-        data = self._serialize(command, *args)
+        data = self._serialize(command, *args)()
         tsn = self.device.application.get_sequence()
         data = t.uint8_t(tsn).serialize() + data
         return self._device.request(0, command, 0, 0, tsn, data, use_ieee=use_ieee)
@@ -50,6 +50,8 @@ class ZDO(zigpy.util.CatchingTaskMixin, zigpy.util.ListenableMixin):
             tsn = self.device.application.get_sequence()
         data = t.uint8_t(tsn).serialize() + data
         return self._device.reply(0, command, 0, 0, tsn, data, use_ieee=use_ieee)
+
+
 
     def handle_message(
         self,
@@ -109,6 +111,8 @@ class ZDO(zigpy.util.CatchingTaskMixin, zigpy.util.ListenableMixin):
             cluster.cluster_id,
             self.device.application.get_dst_address(cluster),
         )
+
+
 
     def leave(self, remove_children: bool = True, rejoin: bool = False) -> Coroutine:
         flags = 0x00
