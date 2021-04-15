@@ -51,8 +51,6 @@ class ZDO(zigpy.util.CatchingTaskMixin, zigpy.util.ListenableMixin):
         data = t.uint8_t(tsn).serialize() + data
         return self._device.reply(0, command, 0, 0, tsn, data, use_ieee=use_ieee)
 
-
-
     def handle_message(
         self,
         profile: int,

@@ -5,6 +5,8 @@ from zigpy.typing import DeviceType
 
 import zigpy.types as t
 
+from zigpy import zigpy
+
 
 class _PowerDescriptorEnums:
     class CurrentPowerMode(t.enum4):
@@ -658,7 +660,8 @@ CLUSTERS = {
     # Network Management Server Services Responses
     ZDOCmd.Mgmt_Lqi_rsp: (STATUS, ("Neighbors", t.Optional(Neighbors))),
     ZDOCmd.Mgmt_Rtg_rsp: (STATUS, ("Routes", t.Optional(Routes))),
-    ZDOCmd.Mgmt_Bind_rsp: (STATUS,
+    ZDOCmd.Mgmt_Bind_rsp: (
+        STATUS,
         ("BindingTableEntries", t.uint8_t),
         ("StartIndex", t.uint8_t),
         ("BindingTableListCount", t.uint8_t),

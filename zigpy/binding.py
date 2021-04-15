@@ -10,6 +10,7 @@ import zigpy.types
 from zigpy.typing import DeviceType
 import zigpy.util
 import zigpy.zdo.types
+import zigpy.application
 
 
 LOGGER = logging.getLogger(__name__)
@@ -17,22 +18,7 @@ BindingListType = List[zigpy.zdo.types.Binding]
 REQUEST_DELAY = (1.0, 1.5)
 
 
-class Bind:
-    def __init__(self, binding: zigpy.zdo.types.Binding, device: DeviceType):
-        self._device = device
-        self._binding = binding
-
-    @property
-    def device(self) -> zigpy.typing.DeviceType:
-        return self._device
-
-    @property
-    def binding(self) -> zigpy.zdo.types.Binding:
-        return self._binding
-
-
 class RequestBinding:
-
     def __init__(self, src_address
                  , src_endPoint
                  , cluster_id
@@ -45,23 +31,7 @@ class RequestBinding:
         self._binding: BindingListType = []
         self._device = device
 
-    def __getitem__(self, *args, **kwargs) -> Bind:
-        """Get item method."""
-        return self.get_binding.__getitem__(*args, **kwargs)
-
-    def __setitem__(self, *args, **kwargs) -> None:
-        """Set item method."""
-        return self.get_binding.__setitem__(*args, **kwargs)
-
-    def __len__(self) -> int:
-        """Len item method."""
-        return self.get_binding.__len__()
-
-    def __iter__(self) -> Iterator:
-        """Iter item method."""
-        return self.get_binding.__iter__()
-
-    async def get_status(self):
+    async def scan(self):
 
         idx = 0
 
@@ -70,7 +40,14 @@ class RequestBinding:
             if status != zigpy.zdo.types.Status.SUCCESS:
                 self.debug("does not support 'Mgmt_Bind_req'")
                 return
-            return status
+            """
+            app = zigpy.application.ControllerApplication
+            cluster = "i don't know how to get the cluster of the device"
+
+            dst_address = app.get_dst_address(cluster)
+
+            return status, dst_address
+            """
 
     @property
     def get_binding(self):
